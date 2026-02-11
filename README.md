@@ -2,64 +2,74 @@
 
 ## 📌 Descrição
 
-Este projeto simula a captura de dados externos e sua sincronização automática com o Google Workspace, garantindo controle total sobre as informações.
+Este projeto simula a captura de dados provenientes de plataformas externas e sua sincronização automática com o Google Workspace, garantindo controle total das informações dentro da infraestrutura própria.
 
 A aplicação permite:
 
 - Criar clientes
 - Editar clientes
 - Excluir clientes
-- Sincronizar automaticamente com Google Planilhas via Webhook
+- Sincronizar automaticamente os dados com Google Planilhas via Webhook
+
+---
+
+## 🔗 Links do Projeto
+
+Repositório:
+https://github.com/muriloalvespassos/golister.api
+
+Planilha integrada:
+https://docs.google.com/spreadsheets/d/1rH5RJbJZbIKQeT0ZL7P5VkFJYCZg24yMS7LmfyhJEZI/edit
+
+Webhook (Google Apps Script):
+https://script.google.com/macros/s/AKfycbz2JjAKjHF-F4bQZX3qXQEEVHdaDsqHT2DWVJY-HXxbqTzhTA1VUsMtq68MG9YKvqXg/exec
 
 ---
 
 ## 🏗️ Arquitetura da Solução
 
-A aplicação foi dividida em 3 camadas:
+A solução foi dividida em três camadas principais:
 
 ### 1️⃣ Front-End
-- HTML + JavaScript puro
-- Persistência local via `localStorage`
-- Geração de ID único com `crypto.randomUUID()`
-- Disparo automático de Webhook
+- HTML5 + JavaScript puro (ES6)
+- Persistência local utilizando `localStorage`
+- Geração de identificador único interno com `crypto.randomUUID()`
+- Disparo automático de Webhook a cada ação (Create, Update, Delete)
 
-### 2️⃣ Webhook
-- Envio de requisições HTTP POST
-- Estrutura JSON padronizada
-- Comunicação em tempo real
+### 2️⃣ Webhook (Integração)
+- Envio de requisições HTTP `POST` via Fetch API
+- Estrutura de dados padronizada em JSON
+- Comunicação em tempo real com o Google Apps Script
 
-### 3️⃣ Google Apps Script
-- Função `doPost(e)` como listener
+### 3️⃣ Google Apps Script (Receptor)
+- Função `doPost(e)` atuando como listener
+- Recebimento e processamento do JSON enviado
 - Integração com Google Planilhas
-- Lógica de:
-  - Criar
-  - Editar
+- Lógica para:
+  - Criar registros
+  - Atualizar registros existentes
   - Deletar registros
-- Busca por ID interno para evitar inconsistências
+- Busca baseada em ID interno para evitar inconsistências
 
 ---
 
 ## 🔄 Fluxo de Funcionamento
 
-1. Usuário cria/edita/deleta cliente
-2. Dados são salvos no `localStorage`
-3. Webhook é disparado automaticamente
-4. Google Apps Script recebe JSON
-5. Planilha é atualizada em tempo real
+1. Usuário cria, edita ou exclui um cliente na interface.
+2. Os dados são armazenados localmente via `localStorage`.
+3. Um Webhook é disparado automaticamente.
+4. O Google Apps Script recebe o JSON via `doPost(e)`.
+5. A planilha é atualizada em tempo real.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## 📦 Estrutura do JSON Enviado
 
-- HTML5
-- JavaScript (ES6)
-- localStorage
-- Fetch API
-- Google Apps Script
-- Google Sheets
-
----
-
-## 🚀 Como Executar o Projeto
-
-1. Clone o repositório:
+```json
+{
+  "acao": "criar | editar | deletar",
+  "id": "uuid",
+  "nome": "string",
+  "email": "string",
+  "telefone": "string"
+}
