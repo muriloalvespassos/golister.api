@@ -15,7 +15,7 @@ A aplicação permite:
 
 ## 🔗 Links do Projeto
 
-Repositório:
+Repositório:git
 https://github.com/muriloalvespassos/golister.api
 
 Planilha integrada:
@@ -73,3 +73,5 @@ A solução foi dividida em três camadas principais:
   "email": "string",
   "telefone": "string"
 }
+
+### Atualizado ###
